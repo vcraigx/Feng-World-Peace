@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breeze of Peace | A Global Wish</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --wind-blue: #e0f7fa;
+            --wind-green: #e8f5e9;
+            --soft-white: rgba(255, 255, 255, 0.7);
+            --text-color: #546e7a;
+            --accent-color: #81c784;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #f5fefd 0%, #e0f2f1 50%, #e1f5fe 100%);
+            color: var(--text-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Animated Background Elements */
+        .wind-particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translate(100vw, -100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 800px;
+            width: 90%;
+            margin: 100px auto;
+            text-align: center;
+            z-index: 1;
+            padding: 40px;
+            background: var(--soft-white);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: #4db6ac;
+            margin-bottom: 20px;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+
+        .message-box {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        .peace-btn {
+            padding: 15px 40px;
+            background: white;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .peace-btn:hover {
+            background: var(--accent-color);
+            color: white;
+            box-shadow: 0 5px 15px rgba(129, 199, 132, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Wish Wall Area */
+        #wish-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .wish-bubble {
+            position: absolute;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            animation: driftUp 6s forwards ease-in;
+            white-space: nowrap;
+        }
+
+        @keyframes driftUp {
+            0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-100px) scale(1.1); opacity: 0; }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            .container { padding: 20px; margin-top: 50px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="wish-container"></div>
+
+    <div class="container">
+        <h1>May Peace Prevail</h1>
+        <p class="subtitle">Whispers of the Wind</p>
+        
+        <div class="message-box">
+            "Peace is not just the absence of war, but the presence of harmony, 
+            like a gentle breeze that touches every leaf without breaking it. 
+            May the world breathe in kindness and exhale compassion."
+        </div>
+
+        <button class="peace-btn" onclick="sendWish()">Send a Wish for Peace</button>
+    </div>
+
+    <footer>
+        &copy; 2023 | Let the wind carry our hopes to every corner of the Earth.
+    </footer>
+
+    <script>
+        // Create background drifting particles
+        function createWind() {
+            const body = document.body;
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'wind-particle';
+                
+                const size = Math.random() * 15 + 5;
+                const duration = Math.random() * 10 + 10;
+                const delay = Math.random() * 5;
+                const topPos = Math.random() * 100;
+
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `-50px`;
+                particle.style.top = `${topPos}vh`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                body.appendChild(particle);
+            }
+        }
+
+        // Send a wish animation
+        const wishes = [
+            "No more hunger",
+            "Love for everyone",
+            "Blue skies everywhere",
+            "Children laughing",
+            "Kindness wins",
+            "Harmony in nature",
+            "Endless spring",
+            "Understanding hearts",
+            "Heal the world"
+        ];
+
+        function sendWish() {
+            const container = document.getElementById('wish-container');
+            const wish = document.createElement('div');
+            wish.className = 'wish-bubble';
+            
+            const randomText = wishes[Math.floor(Math.random() * wishes.length)];
+            wish.innerText = "🕊️ " + randomText;
+            
+            const startX = Math.random() * 80 + 10; // 10% to 90%
+            wish.style.left = `${startX}%`;
+            
+            container.appendChild(wish);
+
+            // Remove element after animation
+            setTimeout(() => {
+                wish.remove();
+            }, 6000);
+        }
+
+        // Initialize background
+        createWind();
+
+        // Auto-release a few wishes on start
+        setTimeout(sendWish, 1000);
+        setTimeout(sendWish, 2500);
+    </script>
+</body>
+</html>
